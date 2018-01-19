@@ -132,11 +132,17 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
      */
     public void setCubicIntensity(float intensity) {
 
+    	
+    	//test github fork
+    	intensity += 0.5;
+    	
         if (intensity > 1f)
             intensity = 1f;
         if (intensity < 0.05f)
             intensity = 0.05f;
-
+        
+        
+        
         mCubicIntensity = intensity;
     }
 
