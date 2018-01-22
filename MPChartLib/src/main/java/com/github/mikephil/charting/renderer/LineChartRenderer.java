@@ -31,6 +31,17 @@ public class LineChartRenderer extends LineRadarRenderer {
 
     protected LineDataProvider mChart;
 
+    protected int minCirclePoint;
+    protected float cicleHoleInHoleRadius;
+
+    public void setMinCirclePoint(int minCirclePoint) {
+        this.minCirclePoint = minCirclePoint;
+    }
+
+    public void setCicleHoleInHoleRadius(float cicleHoleInHoleRadius) {
+        this.cicleHoleInHoleRadius = cicleHoleInHoleRadius;
+    }
+
     /**
      * paint for the inner circle of the value indicators
      */
@@ -654,7 +665,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
             int boundsRangeCount = mXBounds.range + mXBounds.min;
 
-            for (int j = mXBounds.min; j <= boundsRangeCount; j++) {
+            for (int j = mXBounds.min + this.minCirclePoint; j <= boundsRangeCount; j++) {
 
                 Entry e = dataSet.getEntryForIndex(j);
 

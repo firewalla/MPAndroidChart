@@ -24,6 +24,32 @@ public class XAxisRenderer extends AxisRenderer {
 
     protected XAxis mXAxis;
 
+    protected boolean customizeLabelMinMax;
+    protected float labelMin;
+    protected float labelMax;
+    protected float xMin;
+    protected float xMax;
+
+    public void setCustomizeLabelMinMax(boolean customizeLabelMinMax) {
+        this.customizeLabelMinMax = customizeLabelMinMax;
+    }
+
+    public void setLabelMin(float labelMin) {
+        this.labelMin = labelMin;
+    }
+
+    public void setLabelMax(float labelMax) {
+        this.labelMax = labelMax;
+    }
+
+    public void setxMin(float xMin) {
+        this.xMin = xMin;
+    }
+
+    public void setxMax(float xMax) {
+        this.xMax = xMax;
+    }
+
     public XAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
         super(viewPortHandler, trans, xAxis);
 
@@ -69,7 +95,11 @@ public class XAxisRenderer extends AxisRenderer {
 
     @Override
     protected void computeAxisValues(float min, float max) {
-        super.computeAxisValues(min, max);
+        if (this.customizeLabelMinMax) {
+            super.computeAxisValues(this.labelMin, this.labelMax);
+        } else {
+            super.computeAxisValues(min, max);
+        }
 
         computeSize();
     }
@@ -207,18 +237,21 @@ public class XAxisRenderer extends AxisRenderer {
                 if (mXAxis.isAvoidFirstLastClippingEnabled()) {
 
                     // avoid clipping of the last
-                    if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1) {
+                    if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1 && mXAxis.mEntries[i] >= (xMax - 1)) {
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
 
                         if (width > mViewPortHandler.offsetRight() * 2
-                                && x + width > mViewPortHandler.getChartWidth())
+                                && x + width > mViewPortHandler.getChartWidth()) {
                             x -= width / 2;
+                            x += ((xMax - mXAxis.mEntries[i]) * 10.0f);
+                        }
 
                         // avoid clipping of the first
-                    } else if (i == 0) {
+                    } else if (i == 0 && mXAxis.mEntries[0] <= (xMin + 1)) {
 
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
                         x += width / 2;
+                        x -= ((mXAxis.mEntries[i] - xMin) * 10.0f);
                     }
                 }
 
