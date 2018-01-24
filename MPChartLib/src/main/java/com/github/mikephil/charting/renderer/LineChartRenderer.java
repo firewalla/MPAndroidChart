@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,7 +40,12 @@ public class LineChartRenderer extends LineRadarRenderer {
     }
 
     public void setCicleHoleInHoleRadius(float cicleHoleInHoleRadius) {
-        this.cicleHoleInHoleRadius = cicleHoleInHoleRadius;
+
+        if (cicleHoleInHoleRadius >= 0.5f) {
+            this.cicleHoleInHoleRadius = Utils.convertDpToPixel(cicleHoleInHoleRadius);
+        } else {
+            Log.e("LineChartRenderer", "Circle hole in hole radius cannot be < 0.5");
+        }
     }
 
     /**
@@ -838,6 +844,14 @@ public class LineChartRenderer extends LineRadarRenderer {
                                 circleRadius,
                                 circleHoleRadius,
                                 mCirclePaintInner);
+                    }
+
+                    if (cicleHoleInHoleRadius > 0 && cicleHoleInHoleRadius < circleHoleRadius) {
+                        canvas.drawCircle(
+                                circleRadius,
+                                circleRadius,
+                                cicleHoleInHoleRadius,
+                                mRenderPaint);
                     }
                 }
             }
