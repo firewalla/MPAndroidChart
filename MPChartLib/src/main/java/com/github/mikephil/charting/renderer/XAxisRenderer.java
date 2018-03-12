@@ -237,13 +237,13 @@ public class XAxisRenderer extends AxisRenderer {
                 if (mXAxis.isAvoidFirstLastClippingEnabled()) {
 
                     // avoid clipping of the last
-                    if (i == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1 && mXAxis.mEntries[i] >= (xMax - 1)) {
+                    if (i / 2 == mXAxis.mEntryCount - 1 && mXAxis.mEntryCount > 1 && mXAxis.mEntries[i / 2] >= (xMax - 1)) {
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
 
                         if (width > mViewPortHandler.offsetRight() * 2
                                 && x + width > mViewPortHandler.getChartWidth()) {
                             x -= width / 2;
-                            x += ((xMax - mXAxis.mEntries[i]) * 10.0f);
+                            x += ((xMax - mXAxis.mEntries[i / 2]) * 10.0f);
                         }
 
                         // avoid clipping of the first
