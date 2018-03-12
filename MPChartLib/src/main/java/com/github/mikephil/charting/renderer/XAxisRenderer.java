@@ -243,7 +243,7 @@ public class XAxisRenderer extends AxisRenderer {
                         if (width > mViewPortHandler.offsetRight() * 2
                                 && x + width > mViewPortHandler.getChartWidth()) {
                             x -= width / 2;
-                            x += ((xMax - mXAxis.mEntries[i / 2]) * 10.0f);
+                            //x += ((xMax - mXAxis.mEntries[i / 2]) * 10.0f);
                         }
 
                         // avoid clipping of the first
@@ -251,7 +251,7 @@ public class XAxisRenderer extends AxisRenderer {
 
                         float width = Utils.calcTextWidth(mAxisLabelPaint, label);
                         x += width / 2;
-                        x -= ((mXAxis.mEntries[i] - xMin) * 10.0f);
+                        //x -= ((mXAxis.mEntries[i] - xMin) * 10.0f);
                     }
                 }
 
